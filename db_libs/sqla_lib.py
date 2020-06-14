@@ -158,7 +158,7 @@ if __name__ == '__main__':
 
     with decorator_libs.TimerContextManager():
         t_pool = BoundedThreadPoolExecutor(10)  # 封装mysql，切记一定要测试多线程下的情况。
-        for _ in range(5):
+        for _ in range(500):
             # f1()
             t_pool.submit(f1)
         t_pool.shutdown()
