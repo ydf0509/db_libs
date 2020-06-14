@@ -21,7 +21,7 @@ from threadpool_executor_shrink_able import BoundedThreadPoolExecutor
 logger_show_pymysql_execute_sql = nb_log.LogManager('logger_show_pymysql_execute_sql').get_logger_and_add_handlers(log_filename='logger_show_pymysql_execute_sql.log')
 
 
-def my_mogrify(self, query, args=None):
+def _my_mogrify(self, query, args=None):
     """
     Returns the exact string that is sent to the database by calling the
     execute() method.
@@ -38,7 +38,7 @@ def my_mogrify(self, query, args=None):
     return query
 
 
-Cursor.mogrify = my_mogrify
+Cursor.mogrify = _my_mogrify
 
 
 class _SessionContext(Session):
