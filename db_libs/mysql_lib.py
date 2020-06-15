@@ -4,6 +4,11 @@
 @file: mysql_lib.py
 @time: 2020/06
 """
+"""
+最好的封装mysql的方式，是自定义cursor，扩展功能，然后指定为自己的Cursor类型。
+这种方式需要能看懂源码。
+
+"""
 import datetime
 import nb_log
 import pymysql
