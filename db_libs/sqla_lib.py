@@ -146,6 +146,11 @@ if __name__ == '__main__':
             print(cur._saved_cursor._executed)
 
 
+        conn = sqla_helper.engine.raw_connection()
+        cur= conn.cursor()
+        print(cur)
+
+
     def f2():
         ss = sqla_helper.get_session_factory()()
         print(ss)

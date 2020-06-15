@@ -10,6 +10,7 @@ import pymysql
 from DBUtils.PooledDB import PooledDB  # 1.3版本
 import decorator_libs
 
+
 class Row(dict):
     """A dict that allows for object-like property access syntax."""
 
@@ -20,7 +21,10 @@ class Row(dict):
             raise AttributeError(name)
 
 
-class ObjectCusor(pymysql.cursors.DictCursor, nb_log.LoggerMixin, nb_log.LoggerLevelSetterMixin):
+logger_object_cursor = nb_log.LogManager('db_libs.ObjectCusor').get_logger_and_add_handlers(log_filename='ObjectCusor.log')
+
+
+class ObjectCusor(pymysql.cursors.DictCursor, ):
     """
     比字典式的cursor，返回结果除了能用 ["xx"]来获取字段的值以外，还可以使用 .xx的方式获取字段的值。
     """
@@ -28,24 +32,31 @@ class ObjectCusor(pymysql.cursors.DictCursor, nb_log.LoggerMixin, nb_log.LoggerL
 
     def mogrify(self, query, args=None):
         query_str = super().mogrify(query, args)
-        self.logger.debug(query_str)
+        logger_object_cursor.debug(query_str)
         return query_str
+
+    def get_one(self, query, args):
+        """
+        可以在此类添加很多方法，或者继承此类，在CursorContext中指定cursor_class就可以。
+        扩展方法示例，举个例子。
+        :param query:
+        :param args:
+        :return:
+        """
+        print('假设你需要封装获取一条记录的方法，只想用一个方法来完成,不想手动调用execute和fetchone 两个方法，你可以这么封装')
+        self.execute(query, args)
+        return self.fetchone()
 
 
 class CursorContext:
-    def __init__(self, conn_pool: PooledDB, is_show_execute_sql=False):
+    def __init__(self, conn_pool: PooledDB, cursor_class=ObjectCusor, ):
         """
         :param conn_pool: 连接池
-        :param is_show_execute_sql: 是否打印执行的语句
         """
         self.conn = conn_pool.connection()  # type: pymysql.Connection
-        self.cursor = self.conn.cursor(ObjectCusor)  # type: ObjectCusor                #pymysql.cursors.Cursor
-        if not is_show_execute_sql:
-            self.cursor.set_log_level(20)
-        else:
-            self.cursor.set_log_level(10)
+        self.cursor = self.conn.cursor(cursor_class)  # type: ObjectCusor                #pymysql.cursors.Cursor
 
-    def __enter__(self):
+    def __enter__(self) -> ObjectCusor:
         return self.cursor
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -96,7 +107,7 @@ if __name__ == '__main__':
     conn.close()
     """
     # nb_log.LogManager().get_logger_and_add_handlers()
-    with CursorContext(pool, is_show_execute_sql=True) as cursor:
+    with CursorContext(pool, ) as cursor:
         cursor.execute("select * from sqlachemy_queues.queue_test58 limit 3")
         for row in cursor.fetchall():
             print(row['status'])  # 两种方式都可以获取表中的status字段的值。
@@ -104,6 +115,8 @@ if __name__ == '__main__':
         cursor.execute('INSERT INTO sqlachemy_queues.queue_test58(body,publish_timestamp,status) VALUES (%s,%s, %s)',
                        args=('bodytest', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 'teststatus'))
         print(cursor.rowcount, cursor.lastrowid)
+        # 可以调用自定义的方法。
+        print(cursor.get_one('select * from sqlachemy_queues.queue_test58 where body=%s', args=('bodytest',)))
 
     with CursorContext(pool) as cursor:
         cursor.executemany('INSERT INTO sqlachemy_queues.queue_test58(body,publish_timestamp,status) VALUES (%s,%s, %s)',
@@ -113,8 +126,8 @@ if __name__ == '__main__':
 
     def test_threads():
         """测试多线程"""
-        with CursorContext(pool, is_show_execute_sql=True) as cursor:
-            cursor.execute('INSERT INTO sqlachemy_queues.queue_test58(body,publish_timestamp,status) VALUES (%s,%s, %s)',
+        with CursorContext(pool, ) as cursorx:
+            cursorx.execute('INSERT INTO sqlachemy_queues.queue_test58(body,publish_timestamp,status) VALUES (%s,%s, %s)',
                            args=('bodytest', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 'teststatus'))
 
 
