@@ -58,7 +58,6 @@ class SqlaReflectHelper(nb_log.LoggerMixin):
     """
     反射数据库中已存在的表
     """
-    session_factory_of_scoped = None
 
     def __init__(self, sqla_engine: Engine):
         nb_log.LogManager('sqlalchemy.engine.base.Engine').remove_all_handlers()
@@ -73,8 +72,8 @@ class SqlaReflectHelper(nb_log.LoggerMixin):
         self.base_classes = Base.classes
         self.base_classes_keys = Base.classes.keys()
         self.logger.debug(self.base_classes_keys)
-
         self.show_tables_and_columns()
+        self.session_factory_of_scoped = None
 
     def show_tables_and_columns(self):
         for table_name in self.base_classes_keys:
@@ -91,9 +90,9 @@ class SqlaReflectHelper(nb_log.LoggerMixin):
 
     @property
     def session(self):
-        if not self.__class__.session_factory_of_scoped:
-            self.__class__.session_factory_of_scoped = self.get_session_factory_of_scoped()
-        return self.__class__.session_factory_of_scoped()
+        if not self.session_factory_of_scoped:
+            self.session_factory_of_scoped = self.get_session_factory_of_scoped()
+        return self.session_factory_of_scoped()
 
 
 if __name__ == '__main__':
