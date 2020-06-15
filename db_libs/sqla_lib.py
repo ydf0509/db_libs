@@ -148,7 +148,7 @@ if __name__ == '__main__':
         conny = sqla_helper.engine.raw_connection()
         cury = conny.cursor(DictCursor)  # type: DictCursor
         print(cury)
-        cury.execute('select * from ihome_area2 limit 3')
+        cury.execute('SELECT * FROM ihome_area2 LIMIT 3')
         result = cury.fetchall()
         print(result)
         cury.close()
