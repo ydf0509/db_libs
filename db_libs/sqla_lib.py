@@ -10,7 +10,7 @@ import nb_log
 
 import sqlalchemy
 from pymysql import PY2
-from pymysql.cursors import Cursor
+from pymysql.cursors import Cursor,DictCursor
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.ext.automap import automap_base
@@ -145,11 +145,15 @@ if __name__ == '__main__':
             # noinspection PyProtectedMember
             print(cur._saved_cursor._executed)
 
-
-        conn = sqla_helper.engine.raw_connection()
-        cur= conn.cursor()
-        print(cur)
-
+        # 使用最原生的语句，直接调用了pymysql的cursor对象。
+        conny = sqla_helper.engine.raw_connection()
+        cury = conny.cursor(DictCursor)  # type: DictCursor
+        print(cury)
+        cury.execute('select * from ihome_area2 limit 3')
+        result = cury.fetchall()
+        print(result)
+        cury.close()
+        conny.close()
 
     def f2():
         ss = sqla_helper.get_session_factory()()
