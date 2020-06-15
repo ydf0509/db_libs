@@ -151,8 +151,10 @@ if __name__ == '__main__':
         cury.execute('SELECT * FROM ihome_area2 LIMIT 3')
         result = cury.fetchall()
         print(result)
+        conny.commit()
         cury.close()
         conny.close()
+
 
     def f2():
         ss = sqla_helper.get_session_factory()()
