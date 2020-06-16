@@ -26,9 +26,6 @@ class _Row(dict):
             raise AttributeError(name)
 
 
-
-
-
 class ObjectCusor(pymysql.cursors.DictCursor, ):
     """
     比字典式的cursor，返回结果除了能用 ["xx"]来获取字段的值以外，还可以使用 .xx的方式获取字段的值。
