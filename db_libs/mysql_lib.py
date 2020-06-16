@@ -135,9 +135,9 @@ if __name__ == '__main__':
                             args=('bodytest', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 'teststatus'))
 
 
-    from threadpool_executor_shrink_able import BoundedThreadPoolExecutor
+    from threadpool_executor_shrink_able import ThreadPoolExecutorShrinkAble
 
-    thread_pool = BoundedThreadPoolExecutor(10)
+    thread_pool = ThreadPoolExecutorShrinkAble(10)
     with decorator_libs.TimerContextManager():
         for _ in range(3000):
             thread_pool.submit(test_threads)

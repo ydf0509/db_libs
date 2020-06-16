@@ -16,7 +16,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.orm.scoping import ScopedSession
-from threadpool_executor_shrink_able import BoundedThreadPoolExecutor
+from threadpool_executor_shrink_able import ThreadPoolExecutorShrinkAble
 
 # sqlachemy的日志还是非最终完全sql语句，这里可以显示完全最终语句。
 logger_show_pymysql_execute_sql = nb_log.LogManager('show_pymysql_execute_sql').get_logger_and_add_handlers(
@@ -64,7 +64,7 @@ class SqlaReflectHelper(nb_log.LoggerMixin):
     def __init__(self, sqla_engine: Engine):
         nb_log.LogManager('sqlalchemy.engine.base.Engine').remove_all_handlers()
         if sqla_engine.echo:
-            # 将日志自动记录到硬盘根目录的/pythonlogs/sqla_execute.log
+            # 将日志自动记录到硬盘根目录的/pythonlogs/sqla_execute.log。原来的日志模板不好看，换成这个。
             nb_log.LogManager('sqlalchemy.engine.base.Engine').get_logger_and_add_handlers(10, log_filename='sqla_execute.log')
         else:
             nb_log.LogManager('sqlalchemy.engine.base.Engine').get_logger_and_add_handlers(30, log_filename='sqla_execute.log')
@@ -169,7 +169,7 @@ if __name__ == '__main__':
 
 
     with decorator_libs.TimerContextManager():
-        t_pool = BoundedThreadPoolExecutor(10)  # 封装mysql，切记一定要测试多线程下的情况。
+        t_pool = ThreadPoolExecutorShrinkAble(10)  # 封装mysql，切记一定要测试多线程下的情况。
         for _ in range(500):
             # f1()
             t_pool.submit(f1)
