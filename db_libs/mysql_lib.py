@@ -16,7 +16,7 @@ from DBUtils.PooledDB import PooledDB  # 1.3版本
 import decorator_libs
 
 
-class Row(dict):
+class _Row(dict):
     """A dict that allows for object-like property access syntax."""
 
     def __getattr__(self, name):
@@ -26,18 +26,16 @@ class Row(dict):
             raise AttributeError(name)
 
 
-logger_object_cursor = nb_log.LogManager('db_libs.ObjectCusor').get_logger_and_add_handlers(log_filename='ObjectCusor.log')
-
-
 class ObjectCusor(pymysql.cursors.DictCursor, ):
     """
     比字典式的cursor，返回结果除了能用 ["xx"]来获取字段的值以外，还可以使用 .xx的方式获取字段的值。
     """
-    dict_type = Row
+    dict_type = _Row
+    logger_object_cursor = nb_log.LogManager('db_libs.ObjectCusor').get_logger_and_add_handlers(log_filename='ObjectCusor.log')
 
     def mogrify(self, query, args=None):
         query_str = super().mogrify(query, args)
-        logger_object_cursor.debug(query_str)
+        self.logger_object_cursor.debug(query_str)
         return query_str
 
     def get_one(self, query, args):
@@ -70,6 +68,7 @@ class CursorContext:
         else:
             self.conn.commit()
         self.cursor.close()
+
         self.conn.close()
         return False
 
@@ -133,7 +132,7 @@ if __name__ == '__main__':
         """测试多线程"""
         with CursorContext(pool, ) as cursorx:
             cursorx.execute('INSERT INTO sqlachemy_queues.queue_test58(body,publish_timestamp,status) VALUES (%s,%s, %s)',
-                           args=('bodytest', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 'teststatus'))
+                            args=('bodytest', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 'teststatus'))
 
 
     from threadpool_executor_shrink_able import BoundedThreadPoolExecutor
