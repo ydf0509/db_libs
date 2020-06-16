@@ -124,3 +124,88 @@ a = MyRedis('118.0000','HK0000*')
 print(a.str_get('duan'))
 
 ```
+
+
+## sqla_lib使用如下，可以orm操作已存在的数据库。
+```python
+
+if __name__ == '__main__':
+    """
+    例如 ihome_area2的表结果如下。
+    
+    create table ihome_area2
+(
+    create_time datetime    null,
+    update_time datetime    null,
+    id          int auto_increment
+        primary key,
+    name        varchar(32) not null
+);
+
+    """
+
+    enginex = create_engine(
+        'mysql+pymysql://root:123456@127.0.0.1:3306/aj?charset=utf8',
+        max_overflow=10,  # 超过连接池大小外最多创建的连接
+        pool_size=50,  # 连接池大小
+        pool_timeout=30,  # 池中没有线程最多等待的时间，否则报错
+        pool_recycle=3600,  # 多久之后对线程池中的线程进行一次连接的回收（重置）
+        echo=True)
+    sqla_helper = SqlaReflectHelper(enginex)
+    Ihome_area2 = sqla_helper.base_classes.ihome_area2  # ihome_area2是表名。
+
+
+    def f1():
+        with sqla_helper.session as ss:
+            ss  # type: _SessionContext
+
+            print(ss)
+
+            print(ss.query(sqlalchemy.func.count(Ihome_area2.id)).scalar())
+
+            # 使用orm方式插入
+            ss.add(Ihome_area2(create_time=datetime.now(), update_time=datetime.now(), name='testname'))
+
+            print(ss.query(sqlalchemy.func.count(Ihome_area2.id)).scalar())
+
+            # 使用占位符语法插入，此种可以防止sql注入
+            ss.execute(f'''INSERT INTO ihome_area2 (create_time, update_time, name) VALUES (:v1,:v2,:v3)''', params={'v1': '2020-06-14 19:15:14', 'v2': '2020-06-14 19:15:14', 'v3': 'testname00'})
+
+            # 直接自己拼接完整字符串，不使用三方包占位符的后面的参数，此种会引起sql注入，不推荐。
+            cur = ss.execute(f'''INSERT INTO ihome_area2 (create_time, update_time, name) VALUES ('2020-06-14 19:15:14','2020-06-14 19:15:14', 'testname')''', )
+
+            # 这样也可以打印执行的语句
+            # noinspection PyProtectedMember
+            print(cur._saved_cursor._executed)
+
+        # 使用最原生的语句，直接调用了pymysql的cursor对象。
+        conny = sqla_helper.engine.raw_connection()
+        cury = conny.cursor(DictCursor)  # type: DictCursor
+        print(cury)
+        cury.execute('SELECT * FROM ihome_area2 LIMIT 3')
+        result = cury.fetchall()
+        print(result)
+        conny.commit()
+        cury.close()
+        conny.close()
+
+
+    def f2():
+        ss = sqla_helper.get_session_factory()()
+        print(ss)
+        print(ss.query(sqlalchemy.func.count(sqla_helper.base_classes.ihome_area.id)).scalar())
+        ss.add(sqla_helper.base_classes.ihome_area(create_time=datetime.now(), update_time=datetime.now(), name='testname'))
+        ss.commit()
+        print(ss.query(sqlalchemy.func.count(sqla_helper.base_classes.ihome_area.id)).scalar())
+        ss.close()
+
+
+    with decorator_libs.TimerContextManager():
+        t_pool = BoundedThreadPoolExecutor(10)  # 封装mysql，切记一定要测试多线程下的情况。
+        for _ in range(500):
+            # f1()
+            t_pool.submit(f1)
+        t_pool.shutdown()
+
+
+```

@@ -1,0 +1,8 @@
+nb_log
+decorator_libs
+redis
+pymongoelasticsearch
+torndb_for_python3threadpool_executor_shrink_able
+redis2
+redis3
+pymysql==0.8.1

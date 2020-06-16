@@ -10,7 +10,7 @@ import nb_log
 
 import sqlalchemy
 from pymysql import PY2
-from pymysql.cursors import Cursor,DictCursor
+from pymysql.cursors import Cursor, DictCursor
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.ext.automap import automap_base
@@ -18,7 +18,8 @@ from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.orm.scoping import ScopedSession
 from threadpool_executor_shrink_able import BoundedThreadPoolExecutor
 
-logger_show_pymysql_execute_sql = nb_log.LogManager('logger_show_pymysql_execute_sql').get_logger_and_add_handlers(log_filename='logger_show_pymysql_execute_sql.log')
+logger_show_pymysql_execute_sql = nb_log.LogManager('logger_show_pymysql_execute_sql').get_logger_and_add_handlers(
+    log_filename='logger_show_pymysql_execute_sql.log')
 
 
 def _my_mogrify(self, query, args=None):
