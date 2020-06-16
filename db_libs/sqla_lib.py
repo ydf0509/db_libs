@@ -18,8 +18,9 @@ from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.orm.scoping import ScopedSession
 from threadpool_executor_shrink_able import BoundedThreadPoolExecutor
 
-logger_show_pymysql_execute_sql = nb_log.LogManager('logger_show_pymysql_execute_sql').get_logger_and_add_handlers(
-    log_filename='logger_show_pymysql_execute_sql.log')
+# sqlachemy的日志还是非最终完全sql语句，这里可以显示完全最终语句。
+logger_show_pymysql_execute_sql = nb_log.LogManager('show_pymysql_execute_sql').get_logger_and_add_handlers(
+    log_filename='show_pymysql_execute_sql.log')
 
 
 def _my_mogrify(self, query, args=None):
