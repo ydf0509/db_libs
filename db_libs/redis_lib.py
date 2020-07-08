@@ -13,6 +13,7 @@ import decorator_libs  # pip install decorator_libs
 
 """
 
+
 @decorator_libs.flyweight
 class RedisV2(redis2.Redis):
     """
@@ -39,6 +40,11 @@ class RedisV2(redis2.Redis):
         self.set(name, value, ex, px, nx, xx)
 
 
+@decorator_libs.lru_cache()
+def redis2_from_url(url, db=None, **kwargs):
+    return redis2.from_url(url, db, **kwargs)
+
+
 @decorator_libs.flyweight
 class RedisV3(redis3.Redis):
     """
@@ -54,6 +60,11 @@ class RedisV3(redis3.Redis):
     此类是为了redsi3.
 
     """
+
+
+@decorator_libs.lru_cache()
+def redis3_from_url(url, db=None, **kwargs):
+    return redis3.from_url(url, db, **kwargs)
 
 
 if __name__ == '__main__':

@@ -6,7 +6,7 @@ print(filepath)
 
 setup(
     name='db_libs',  #
-    version="0.2",
+    version="0.5",
     description=(
         "'redis', 'mongo', 'elasticsearch', 'mysql', 'sqlachemy', '线程安全的数据库封装，享元模式支持无限实例化调用'"
     ),
@@ -16,9 +16,9 @@ setup(
     long_description=open(filepath, 'r', encoding='utf8').read(),
     # data_files=[filepath],
     author='bfzs',
-    author_email='m13148804508@163.com',
+    author_email='ydf0509@sohu.com',
     maintainer='ydf',
-    maintainer_email='m13148804508@163.com',
+    maintainer_email='ydf0509@sohu.com',
     license='BSD License',
     packages=find_packages(),
     include_package_data=True,
@@ -37,13 +37,14 @@ setup(
     install_requires=['nb_log',
                       'decorator_libs',
                       'redis',
-                      'pymongo'
+                      'pymongo',
                       'elasticsearch',
-                      'torndb_for_python3'
+                      'torndb_for_python3',
                       'threadpool_executor_shrink_able',
                       'redis2',
                       'redis3',
                       'pymysql==0.8.1',
+                      'records'
                       ]
 )
 """
@@ -51,7 +52,7 @@ setup(
 python setup.py sdist upload -r pypi
 
 
-python setup.py sdist & twine upload dist/db_libs-0.2.tar.gz
+python setup.py sdist & twine upload dist/db_libs-0.5.tar.gz
 
 
 

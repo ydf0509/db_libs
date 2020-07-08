@@ -1,12 +1,12 @@
 Metadata-Version: 2.1
 Name: db-libs
-Version: 0.2
+Version: 0.5
 Summary: 'redis', 'mongo', 'elasticsearch', 'mysql', 'sqlachemy', '线程安全的数据库封装，享元模式支持无限实例化调用'
 Home-page: UNKNOWN
 Author: bfzs
-Author-email: m13148804508@163.com
+Author-email: ydf0509@sohu.com
 Maintainer: ydf
-Maintainer-email: m13148804508@163.com
+Maintainer-email: ydf0509@sohu.com
 License: BSD License
 Description: # db_libs
         
