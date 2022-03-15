@@ -6,11 +6,11 @@ print(filepath)
 
 setup(
     name='db_libs',  #
-    version="0.5",
+    version="0.6",
     description=(
         "'redis', 'mongo', 'elasticsearch', 'mysql', 'sqlachemy', '线程安全的数据库封装，享元模式支持无限实例化调用'"
     ),
-    keywords=("database", 'redis', 'mongo', 'elasticsearch', 'mysql', 'sqlachemy'),
+    keywords=["database", 'redis', 'mongo', 'elasticsearch', 'mysql', 'sqlachemy'],
     # long_description=open('README.md', 'r',encoding='utf8').read(),
     long_description_content_type="text/markdown",
     long_description=open(filepath, 'r', encoding='utf8').read(),
@@ -52,7 +52,7 @@ setup(
 python setup.py sdist upload -r pypi
 
 
-python setup.py sdist & twine upload dist/db_libs-0.5.tar.gz
+python setup.py sdist & twine upload dist/db_libs-0.6.tar.gz
 
 
 

@@ -4,7 +4,7 @@ from pymongo.collection import Collection
 from pymongo import MongoClient
 
 """
-此模块封装的pymongo是在linux上子进程安全的。
+此模块封装的pymongo是在linux上子进程安全的。使用方式见 db_libs/mongo_fork_safe.py
 在win上无所谓都正常。
 """
 

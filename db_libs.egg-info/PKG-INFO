@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: db-libs
-Version: 0.5
+Version: 0.6
 Summary: 'redis', 'mongo', 'elasticsearch', 'mysql', 'sqlachemy', '线程安全的数据库封装，享元模式支持无限实例化调用'
 Home-page: UNKNOWN
 Author: bfzs
@@ -10,7 +10,7 @@ Maintainer-email: ydf0509@sohu.com
 License: BSD License
 Description: # db_libs
         
-        各种数据库的封装。只封装最难的部分，十分克制,很少去添加一些新的方法然后去调用原生类的方法。
+        各种数据库的封装。只封装生成连接的部分，十分克制,很少去添加一些新的方法然后去调用原生类的方法。
         
         因为原生类已经很好用了，主要是控制一下用户无限实例化连接类，造成反复创建连接就可以了。
         
@@ -219,6 +219,8 @@ Description: # db_libs
         
         
         ```
+        
+        ![](https://visitor-badge.glitch.me/badge?page_id=db_libs)
 Keywords: database,redis,mongo,elasticsearch,mysql,sqlachemy
 Platform: all
 Classifier: Development Status :: 4 - Beta

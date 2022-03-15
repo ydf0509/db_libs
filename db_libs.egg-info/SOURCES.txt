@@ -1,6 +1,7 @@
 README.md
 setup.py
 db_libs/__init__.py
+db_libs/mongo_fork_safe.py
 db_libs/mongo_lib.py
 db_libs/mysql_lib.py
 db_libs/redis_lib.py

@@ -8,3 +8,4 @@ threadpool_executor_shrink_able
 redis2
 redis3
 pymysql==0.8.1
+records
