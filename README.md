@@ -1,5 +1,5 @@
 # db_libs
-## 安装 pip innstall db_libs
+## 安装 pip install db_libs
 
 各种数据库的封装。只封装生成连接的部分，十分克制,很少去添加一些新的方法然后去调用原生类的方法。
 
@@ -50,7 +50,7 @@ class RedisClient:
         self.r.set(name=key,value=value)
     
     def my_get(self,name):
-        # 这个封装简直是多次一举，在redis实例化时候，
+        # 这个封装简直是多此一举，在redis实例化时候，
         # 将Redis类的构造方法的入参 decode_responses设置为True，就可以避免几百个方法需要反复decode了。
         return self.r.get(name).decode()
 
