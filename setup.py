@@ -6,7 +6,7 @@ print(filepath)
 
 setup(
     name='db_libs',  #
-    version="0.6",
+    version="0.7",
     description=(
         "'redis', 'mongo', 'elasticsearch', 'mysql', 'sqlachemy', '线程安全的数据库封装，享元模式支持无限实例化调用'"
     ),
@@ -39,11 +39,12 @@ setup(
                       'redis',
                       'pymongo',
                       'elasticsearch',
-                      'torndb_for_python3',
                       'threadpool_executor_shrink_able',
                       'redis2',
                       'redis3',
-                      'pymysql==0.8.1',
+                      # 'torndb_for_python3',
+                      # 'pymysql==0.8.1',
+                        'pymysql',
                       'records'
                       ]
 )
