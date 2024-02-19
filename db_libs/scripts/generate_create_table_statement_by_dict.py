@@ -5,7 +5,7 @@ def generate_create_table_statement(data):
         if isinstance(value, bool):
             columns.append(f"{key} BOOLEAN")
         elif isinstance(value, int):
-            columns.append(f"{key} INT")
+            columns.append(f"{key} BIGINT(20)")
         elif isinstance(value, float):
             columns.append(f"{key} FLOAT")
         elif isinstance(value, str):
