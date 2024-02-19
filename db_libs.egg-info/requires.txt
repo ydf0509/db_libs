@@ -7,5 +7,7 @@ torndb_for_python3
 threadpool_executor_shrink_able
 redis2
 redis3
-pymysql==0.8.1
+redis5
+pymysql
 records
+DBUtils==3.0.3

@@ -9,7 +9,7 @@ import decorator_libs
 import nb_log
 
 import sqlalchemy
-from pymysql import PY2
+# from pymysql import PY2
 from pymysql.cursors import Cursor, DictCursor
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
@@ -31,8 +31,8 @@ def _my_mogrify(self, query, args=None):
     This method follows the extension to the DB API 2.0 followed by Psycopg.
     """
     conn = self._get_db()
-    if PY2:  # Use bytes on Python 2 always
-        query = self._ensure_bytes(query, encoding=conn.encoding)
+    # if PY2:  # Use bytes on Python 2 always
+    #     query = self._ensure_bytes(query, encoding=conn.encoding)
 
     if args is not None:
         query = query % self._escape_args(args, conn)

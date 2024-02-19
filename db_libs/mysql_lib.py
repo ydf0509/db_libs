@@ -12,7 +12,8 @@
 import datetime
 import nb_log
 import pymysql
-from DBUtils.PooledDB import PooledDB  # 1.3版本
+import pymysql.cursors
+from dbutils.pooled_db  import PooledDB  # 1.3版本
 import decorator_libs
 
 
@@ -29,6 +30,8 @@ class _Row(dict):
 class ObjectCusor(pymysql.cursors.DictCursor, ):
     """
     比字典式的cursor，返回结果除了能用 ["xx"]来获取字段的值以外，还可以使用 .xx的方式获取字段的值。
+
+    将sql内容打印出来
     """
     dict_type = _Row
     logger_object_cursor = nb_log.LogManager('db_libs.ObjectCusor').get_logger_and_add_handlers(log_filename='ObjectCusor.log')
@@ -68,7 +71,6 @@ class CursorContext:
         else:
             self.conn.commit()
         self.cursor.close()
-
         self.conn.close()
         return False
 

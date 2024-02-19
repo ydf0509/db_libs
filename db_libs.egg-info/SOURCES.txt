@@ -11,3 +11,4 @@ db_libs.egg-info/SOURCES.txt
 db_libs.egg-info/dependency_links.txt
 db_libs.egg-info/requires.txt
 db_libs.egg-info/top_level.txt
+tests/test_multi_prcess_pymongo.py
