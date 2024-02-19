@@ -39,7 +39,6 @@ setup(
                       'redis',
                       'pymongo',
                       'elasticsearch',
-                      'torndb_for_python3',
                       'threadpool_executor_shrink_able',
                       'redis2',
                       'redis3',
