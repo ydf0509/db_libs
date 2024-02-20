@@ -1,5 +1,4 @@
-def generate_create_table_statement(data):
-    table_name = "your_table_name"
+def generate_create_table_statement(data,table_name):
     columns = []
     for key, value in data.items():
         if isinstance(value, bool):
@@ -61,7 +60,7 @@ if __name__ == '__main__':
     }
 
     # 生成建表语句
-    create_table_statement = generate_create_table_statement(data)
+    create_table_statement = generate_create_table_statement(data,table_name = "your_table_namexx")
 
     # 打印建表语句
     print(create_table_statement)

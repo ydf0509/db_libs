@@ -11,7 +11,7 @@ import nb_log
 import sqlalchemy
 # from pymysql import PY2
 from pymysql.cursors import Cursor, DictCursor
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session, sessionmaker
@@ -136,8 +136,10 @@ if __name__ == '__main__':
 
             print(ss.query(sqlalchemy.func.count(Ihome_area2.id)).scalar())
 
+
+
             # 使用占位符语法插入，此种可以防止sql注入
-            ss.execute(f'''INSERT INTO ihome_area2 (create_time, update_time, name) VALUES (:v1,:v2,:v3)''', params={'v1': '2020-06-14 19:15:14', 'v2': '2020-06-14 19:15:14', 'v3': 'testname00'})
+            ss.execute(text('''INSERT INTO ihome_area2 (create_time, update_time, name) VALUES (:v1,:v2,:v3)'''), params={'v1': '2020-06-14 19:15:14', 'v2': '2020-06-14 19:15:14', 'v3': 'testname00'})
 
             # 直接自己拼接完整字符串，不使用三方包占位符的后面的参数，此种会引起sql注入，不推荐。
             cur = ss.execute(f'''INSERT INTO ihome_area2 (create_time, update_time, name) VALUES ('2020-06-14 19:15:14','2020-06-14 19:15:14', 'testname')''', )
@@ -145,6 +147,9 @@ if __name__ == '__main__':
             # 这样也可以打印执行的语句
             # noinspection PyProtectedMember
             print(cur._saved_cursor._executed)
+
+        # 使用engine多对操作.
+        enginex.execute('SELECT * FROM ihome_area2')
 
         # 使用最原生的语句，直接调用了pymysql的cursor对象。
         conny = sqla_helper.engine.raw_connection()
