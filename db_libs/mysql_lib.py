@@ -13,7 +13,7 @@ import datetime
 import nb_log
 import pymysql
 import pymysql.cursors
-from dbutils.pooled_db  import PooledDB  # 1.3版本
+from dbutils.pooled_db  import PooledDB  # pip install DBUtils
 import decorator_libs
 
 
