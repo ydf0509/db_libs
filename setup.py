@@ -6,7 +6,7 @@ print(filepath)
 
 setup(
     name='db_libs',  #
-    version="1.0",
+    version="1.1",
     description=(
         "'redis', 'mongo', 'elasticsearch', 'mysql', 'sqlachemy', '线程安全的数据库封装，享元模式支持无限实例化调用'"
     ),
@@ -44,7 +44,7 @@ setup(
                       'redis3',
                       'redis5',
                       'pymysql',
-                      'records',
+                      # 'records',
                       'dbutils==3.1.0'
                       ]
 )
@@ -53,7 +53,7 @@ setup(
 python setup.py sdist upload -r pypi
 
 
-python setup.py sdist & twine upload dist/db_libs-1.0.tar.gz
+python setup.py sdist & twine upload dist/db_libs-1.1.tar.gz
 
 
 

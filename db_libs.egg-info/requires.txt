@@ -8,5 +8,4 @@ redis2
 redis3
 redis5
 pymysql
-records
 dbutils==3.1.0

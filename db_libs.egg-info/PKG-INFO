@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: db-libs
-Version: 1.0
+Version: 1.1
 Summary: 'redis', 'mongo', 'elasticsearch', 'mysql', 'sqlachemy', '线程安全的数据库封装，享元模式支持无限实例化调用'
 Home-page: 
 Author: bfzs
