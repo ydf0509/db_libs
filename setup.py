@@ -6,7 +6,7 @@ print(filepath)
 
 setup(
     name='db_libs',  #
-    version="1.1",
+    version="1.3",
     description=(
         "'redis', 'mongo', 'elasticsearch', 'mysql', 'sqlachemy', '线程安全的数据库封装，享元模式支持无限实例化调用'"
     ),
@@ -32,6 +32,14 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: Implementation',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
         'Topic :: Software Development :: Libraries'
     ],
     install_requires=['nb_log',
@@ -45,17 +53,21 @@ setup(
                       'redis5',
                       'pymysql',
                       # 'records',
-                      'dbutils==3.1.0'
+                      'dbutils==3.1.0',
                       ]
 )
 """
 打包上传
-python setup.py sdist upload -r pypi
 
+打包上传（推荐方式）：
+python setup.py sdist & twine upload dist/db_libs-1.3.tar.gz
 
-python setup.py sdist & twine upload dist/db_libs-1.1.tar.gz
+或者使用 build 模块（更现代的方式）：
+pip install build twine
+python -m build
+twine upload dist/*
 
-
-
-python -m pip install db_libs --upgrade -i https://pypi.org/simple   # 及时的方式，不用等待 阿里云 豆瓣 同步
+安装：
+python -m pip install db_libs --upgrade -i https://pypi.org/simple
 """
+
